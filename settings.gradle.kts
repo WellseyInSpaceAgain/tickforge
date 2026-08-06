@@ -31,6 +31,8 @@ include("jshell")
 project(":jshell").projectDir = file("./runelite-jshell")
 include("client")
 project(":client").projectDir = file("./runelite-client")
+include("tickforge-api")
+project(":tickforge-api").projectDir = file("./tickforge-api")
 apply(from = "./common.settings.gradle.kts")
 
 includeBuild("cache")
