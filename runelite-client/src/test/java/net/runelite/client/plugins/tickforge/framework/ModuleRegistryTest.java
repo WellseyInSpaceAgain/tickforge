@@ -1,4 +1,4 @@
-package dev.tickforge.client.module;
+package net.runelite.client.plugins.tickforge.framework;
 
 import dev.tickforge.api.module.TickforgeModule;
 import java.util.Collections;
