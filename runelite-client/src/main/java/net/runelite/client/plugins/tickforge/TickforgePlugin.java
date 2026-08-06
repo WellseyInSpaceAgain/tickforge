@@ -4,7 +4,9 @@ import javax.inject.Inject;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.tickforge.framework.TickforgeModuleManager;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @PluginDescriptor(
 	name = "Tickforge",
 	description = "Hosts Tickforge development tools and activity modules",
@@ -19,12 +21,14 @@ public class TickforgePlugin extends Plugin
 	@Override
 	protected void startUp()
 	{
-		// Manager and registered modules have been constructed.
+        log.info("Tickforge plugin started");
+		moduleManager.getRegistry().start("proof");
 	}
 
 	@Override
 	protected void shutDown()
 	{
+        log.debug("Tickforge plugin stopping");
 		moduleManager.shutDown();
 	}
 }
