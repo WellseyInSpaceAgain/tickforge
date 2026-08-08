@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.plugins.tickforge.framework.ModuleRegistry;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
+import javax.swing.JCheckBox;
+import net.runelite.client.plugins.tickforge.devtools.MenuEntrySnapshotModule;
 
 @Slf4j
 public class TickforgePanel extends PluginPanel
@@ -69,6 +71,8 @@ public class TickforgePanel extends PluginPanel
 			descriptionLabel.setForeground(ColorScheme.TEXT_COLOR);
 			details.add(descriptionLabel);
 		}
+
+		addModuleSettings(details, module);
 
 		final JPanel controls = new JPanel(new BorderLayout(8, 0));
 		controls.setOpaque(false);
@@ -132,5 +136,38 @@ public class TickforgePanel extends PluginPanel
 		);
 
 		toggleButton.setText(running ? "Stop" : "Start");
+	}
+
+	private void addModuleSettings(
+	JPanel details,
+	TickforgeModule module)
+	{
+		if (module instanceof MenuEntrySnapshotModule)
+		{
+			addMenuEntrySnapshotSettings(
+				details,
+				(MenuEntrySnapshotModule) module);
+		}
+	}
+
+	private void addMenuEntrySnapshotSettings(
+		JPanel details,
+		MenuEntrySnapshotModule module)
+	{
+		final JCheckBox blankTileFilter =
+			new JCheckBox("Ignore blank walkable tiles");
+
+		blankTileFilter.setOpaque(false);
+		blankTileFilter.setSelected(
+			module.isBlankWalkableTileFilterEnabled());
+
+		blankTileFilter.setToolTipText(
+			"Ignore changing Walk here entries when hovering empty tiles.");
+
+		blankTileFilter.addActionListener(event ->
+			module.setBlankWalkableTileFilterEnabled(
+				blankTileFilter.isSelected()));
+
+		details.add(blankTileFilter);
 	}
 }
