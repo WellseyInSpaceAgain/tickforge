@@ -49,6 +49,11 @@ public class InteractionProbeModule implements TickforgeModule {
     }
 
     @Override
+    public String getDescription() {
+        return "Records and inspects player interactions with NPCs, players, objects, ground items, widgets, and other menu targets.";
+    }
+
+    @Override
     public void startUp() {
         eventBus.register(this);
 

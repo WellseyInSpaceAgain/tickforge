@@ -35,6 +35,11 @@ public class GameStateSnapshotModule implements TickforgeModule {
     }
 
     @Override
+    public String getDescription() {
+        return "Logs compact player and game state whenever it changes.";
+    }
+
+    @Override
     public void startUp() {
         eventBus.register(this);
 
