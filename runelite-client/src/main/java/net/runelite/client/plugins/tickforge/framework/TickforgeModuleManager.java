@@ -4,6 +4,7 @@ import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.client.plugins.tickforge.activities.ProofModule;
+import net.runelite.client.plugins.tickforge.devtools.EventTraceModule;
 import net.runelite.client.plugins.tickforge.devtools.GameStateSnapshotModule;
 import net.runelite.client.plugins.tickforge.devtools.InteractionProbeModule;
 import net.runelite.client.plugins.tickforge.devtools.MenuEntrySnapshotModule;
@@ -17,12 +18,14 @@ public class TickforgeModuleManager {
 			ProofModule proofModule,
 			MenuEntrySnapshotModule menuEntrySnapshotModule,
 			InteractionProbeModule interactionProbeModule,
-			GameStateSnapshotModule gameStateSnapshotModule) {
+			GameStateSnapshotModule gameStateSnapshotModule,
+			EventTraceModule eventTraceModule) {
 		registry = new ModuleRegistry(Arrays.asList(
 				proofModule,
 				menuEntrySnapshotModule,
 				interactionProbeModule,
-				gameStateSnapshotModule));
+				gameStateSnapshotModule,
+				eventTraceModule));
 	}
 
 	public ModuleRegistry getRegistry() {
