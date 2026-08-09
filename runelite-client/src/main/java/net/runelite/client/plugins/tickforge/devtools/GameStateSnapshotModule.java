@@ -84,8 +84,7 @@ public class GameStateSnapshotModule implements TickforgeModule {
                 .gameCycle(client.getGameCycle())
                 .gameState(client.getGameState())
                 .world(client.getWorld())
-                .widgetSelected(client.isWidgetSelected())
-                .interactionActorType(InteractionActorType.UNKNOWN);
+                .widgetSelected(client.isWidgetSelected());
 
         Player player = client.getLocalPlayer();
 
@@ -121,28 +120,33 @@ public class GameStateSnapshotModule implements TickforgeModule {
         WorldPoint worldPoint = target.getWorldLocation();
 
         builder
-                .interactionActorName(target.getName())
-                .interactionActorWorldX(worldPoint.getX())
-                .interactionActorWorldY(worldPoint.getY())
-                .interactionActorPlane(worldPoint.getPlane());
+                .interactingActorName(target.getName())
+                .interactingActorWorldX(worldPoint.getX())
+                .interactingActorWorldY(worldPoint.getY())
+                .interactingActorPlane(worldPoint.getPlane());
 
         if (target instanceof NPC) {
             NPC npc = (NPC) target;
 
             builder
-                    .interactionActorType(InteractionActorType.NPC)
-                    .interactionActorId(npc.getId())
-                    .interactionActorIndex(npc.getIndex());
+                    .interactingActorType(InteractingActorType.NPC)
+                    .interactingActorId(npc.getId())
+                    .interactingActorIndex(npc.getIndex());
 
             return;
         }
 
         if (target instanceof Player) {
-            builder.interactionActorType(InteractionActorType.PLAYER);
+            Player player = (Player) target;
+
+            builder
+                    .interactingActorType(InteractingActorType.PLAYER)
+                    .interactingActorId(player.getId());
+
             return;
         }
 
-        builder.interactionActorType(InteractionActorType.UNKNOWN);
+        builder.interactingActorType(InteractingActorType.UNKNOWN);
     }
 
     private void enrichSelectionContext(GameStateSnapshotBuilder builder) {
@@ -185,13 +189,13 @@ public class GameStateSnapshotModule implements TickforgeModule {
         Integer animation;
 
         // Current actor interaction
-        InteractionActorType interactionActorType;
-        Integer interactionActorId;
-        Integer interactionActorIndex;
-        String interactionActorName;
-        Integer interactionActorWorldX;
-        Integer interactionActorWorldY;
-        Integer interactionActorPlane;
+        InteractingActorType interactingActorType;
+        Integer interactingActorId;
+        Integer interactingActorIndex;
+        String interactingActorName;
+        Integer interactingActorWorldX;
+        Integer interactingActorWorldY;
+        Integer interactingActorPlane;
 
         // Item/spell/widget target mode
         boolean widgetSelected;
@@ -202,7 +206,7 @@ public class GameStateSnapshotModule implements TickforgeModule {
         String selectedWidgetTargetVerb;
     }
 
-    public enum InteractionActorType {
+    public enum InteractingActorType {
         NPC,
         PLAYER,
         UNKNOWN
